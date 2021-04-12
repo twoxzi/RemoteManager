@@ -36,6 +36,8 @@ namespace Twoxzi.RemoteManager
         private ICommand addCommand;
         private ICommand outputCommand;
         private ICommand descColumnCommand;
+        private RelayCommand<RemoteInfo4Binding> extensionSettingsCommand;
+
         [ImportMany(typeof(IRemoteTool))]
         public List<Lazy<IRemoteTool, IRemoteToolMetadata>> RemoteToolList { get; set; }
 
@@ -48,7 +50,7 @@ namespace Twoxzi.RemoteManager
             {
                 isGroup = value;
                 Configuration con = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                if(con.AppSettings.Settings["isGroup"] == null)
+                if (con.AppSettings.Settings["isGroup"] == null)
                 {
                     con.AppSettings.Settings.Add("isGroup", isGroup == true ? "1" : "0");
                 }
@@ -108,24 +110,24 @@ namespace Twoxzi.RemoteManager
             {
                 RemoteInfo4Binding info = x as RemoteInfo4Binding;
 
-                if(info == null)
+                if (info == null)
                 {
                     return true;
                 }
                 String str = SearchText.Trim();
-                if(String.IsNullOrEmpty(str))
+                if (String.IsNullOrEmpty(str))
                 {
                     return true;
                 }
                 String[] array = str.Split(' ');
 
-                foreach(var item in array)
+                foreach (var item in array)
                 {
-                    if(String.IsNullOrEmpty(item))
+                    if (String.IsNullOrEmpty(item))
                     {
                         continue;
                     }
-                    if((info.ID?.Contains(item) == true) || (info.DisplayName?.Contains(item) == true) || (info.Memo?.Contains(item) == true) || (info.GroupName?.Contains(item) == true) || (info.RemoteToolMetadata?.ToolName?.Contains(item) == true))
+                    if ((info.ID?.Contains(item) == true) || (info.DisplayName?.Contains(item) == true) || (info.Memo?.Contains(item) == true) || (info.GroupName?.Contains(item) == true) || (info.RemoteToolMetadata?.ToolName?.Contains(item) == true))
                     {
 
                     }
@@ -150,7 +152,7 @@ namespace Twoxzi.RemoteManager
         private void loadRemoteInfo()
         {
             Collection.Clear();
-            using(MyDbContext dbo = MyDbContext.CreateDb())
+            using (MyDbContext dbo = MyDbContext.CreateDb())
             {
                 var query = from a in dbo.RemoteInfo.AsNoTracking().AsEnumerable()
                             join b in RemoteToolMetadataList on a.ToolCode equals b.ToolCode into tt
@@ -169,7 +171,7 @@ namespace Twoxzi.RemoteManager
                                 RemoteToolMetadata = b
                             };
 
-                foreach(var item in query)
+                foreach (var item in query)
                 {
                     Collection.Add(item);
                 }
@@ -215,7 +217,7 @@ namespace Twoxzi.RemoteManager
         {
             get
             {
-                if(addCommand == null)
+                if (addCommand == null)
                 {
                     addCommand = new RelayCommand(AddCommandExecute);
                 }
@@ -236,7 +238,7 @@ namespace Twoxzi.RemoteManager
                 RemoteInfo4Binding info = new RemoteInfo4Binding() { LastTime = DateTime.Now, Memo = "" };
 
                 // 如果由数字和空格组成,则是ID,否则是Name
-                if(SearchText.All(x => x == ' ' || (x >= 48 && x <= 57)))
+                if (SearchText.All(x => x == ' ' || (x >= 48 && x <= 57)))
                 {
                     info.ID = SearchText.Trim();
                 }
@@ -247,7 +249,7 @@ namespace Twoxzi.RemoteManager
                 Collection.Add(info);
                 listView.SelectedItem = info;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -284,12 +286,12 @@ namespace Twoxzi.RemoteManager
         {
             get
             {
-                if(saveCommand == null)
+                if (saveCommand == null)
                 {
                     saveCommand = new RelayCommand(obj =>
                                     {
                                         var listView = obj as ListView;
-                                        if(listView == null)
+                                        if (listView == null)
                                         {
                                             return;
                                         }
@@ -301,10 +303,10 @@ namespace Twoxzi.RemoteManager
                                         }
 
                                         // 保存
-                                        using(MyDbContext dbo = MyDbContext.CreateDb())
+                                        using (MyDbContext dbo = MyDbContext.CreateDb())
                                         {
                                             var list = RemoteToolMetadataList;
-                                            if(dbo.RemoteInfo.AsNoTracking().Any(x => x.ID == info.ID))
+                                            if (dbo.RemoteInfo.AsNoTracking().Any(x => x.ID == info.ID))
                                             {
                                                 dbo.RemoteInfo.Attach(info);
                                                 dbo.Entry(info).State = EntityState.Modified;
@@ -329,31 +331,32 @@ namespace Twoxzi.RemoteManager
         {
             get
             {
-                if(deleteCommand == null)
+                if (deleteCommand == null)
                 {
                     deleteCommand = new RelayCommand(obj =>
                       {
                           var listView = obj as ListView;
                           RemoteInfo4Binding info = listView.SelectedItem as RemoteInfo4Binding;
-                          if(info == null)
+                          if (info == null)
                           {
                               return;
                           }
                           try
                           {
                               // 如果是新增的，则删除会出错
-                              using(MyDbContext dbo = MyDbContext.CreateDb())
+                              using (MyDbContext dbo = MyDbContext.CreateDb())
                               {
 
-                                 var entity= dbo.RemoteInfo.Where(x => x.ID == info.ID && x.ToolCode == info.ToolCode).FirstOrDefault();
-                                  if(entity != null)
+                                  var entity = dbo.RemoteInfo.Where(x => x.ID == info.ID && x.ToolCode == info.ToolCode).FirstOrDefault();
+                                  if (entity != null)
                                   {
                                       dbo.RemoteInfo.Remove(entity);
                                       dbo.SaveChanges();
                                   }
                               }
                           }
-                          catch(Exception ex) {
+                          catch (Exception ex)
+                          {
                               MessageBox.Show(ex.Message);
                           }
                           var index = listView.SelectedIndex;
@@ -374,7 +377,7 @@ namespace Twoxzi.RemoteManager
         {
             get
             {
-                if(linkCommand == null)
+                if (linkCommand == null)
                 {
                     linkCommand = new RelayCommand<ListView>(listView =>
                     {
@@ -395,23 +398,23 @@ namespace Twoxzi.RemoteManager
         {
             try
             {
-                if(listView == null)
+                if (listView == null)
                 {
                     return;
                 }
                 RemoteInfo4Binding info = listView.SelectedItem as RemoteInfo4Binding;
-                if(info == null)
+                if (info == null)
                 {
                     //MessageBox.Show("未选中连接对象，请先在列表中选择目标。"); 
                     return;
                 }
                 IRemoteTool tool = RemoteToolList.Where(x => x.Metadata.ToolCode == info.ToolCode).FirstOrDefault()?.Value;
-                if(tool == null)
+                if (tool == null)
                 {
                     MessageBox.Show($"没有找到编码为{info.ToolCode}的工具,请检查插件是否正确加载");
                     return;
                 }
-                if(info.Password != null && info.Password.Length > 0)
+                if (info.Password != null && info.Password.Length > 0)
                 {
                     Clipboard.SetText(info.Password);
                 }
@@ -419,7 +422,7 @@ namespace Twoxzi.RemoteManager
                 tool.Open(info);
 
                 var window = Window.GetWindow(listView);
-                if(window != null)
+                if (window != null)
                 {
                     window.WindowState = WindowState.Minimized;
                 }
@@ -427,7 +430,7 @@ namespace Twoxzi.RemoteManager
                 Collection.Move(listView.SelectedIndex, 0);
                 listView.SelectedItem = info;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 #if DEBUG
                 MessageBox.Show(ex.Message + ex.StackTrace, "错误");
@@ -445,7 +448,7 @@ namespace Twoxzi.RemoteManager
         private void RefreshOrder(String header, Boolean isAsc)
         {
             ColumnDescriptor cd = Columns.FirstOrDefault(x => x.Header == header);
-            if(cd != null)
+            if (cd != null)
             {
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(Collection);
                 view.SortDescriptions.Clear();
@@ -459,7 +462,7 @@ namespace Twoxzi.RemoteManager
         {
             get
             {
-                if(ascColumnCommand == null)
+                if (ascColumnCommand == null)
                 {
                     ascColumnCommand = new RelayCommand(x => SortByColumnExecute(x, true));
                 }
@@ -473,7 +476,7 @@ namespace Twoxzi.RemoteManager
         {
             get
             {
-                if(descColumnCommand == null)
+                if (descColumnCommand == null)
                 {
                     descColumnCommand = new RelayCommand(x => SortByColumnExecute(x, false));
                 }
@@ -484,11 +487,11 @@ namespace Twoxzi.RemoteManager
         //单击表头排序
         private void SortByColumnExecute(object sender, Boolean isAsc)
         {
-            if(sender is GridViewColumnHeader)
+            if (sender is GridViewColumnHeader)
             {
                 //获得点击的列  
                 GridViewColumn clickedColumn = (sender as GridViewColumnHeader).Column;
-                if(clickedColumn != null)
+                if (clickedColumn != null)
                 {
                     RefreshOrder(clickedColumn.Header.ToString(), isAsc);
                 }
@@ -501,7 +504,7 @@ namespace Twoxzi.RemoteManager
         private void GroupSwitchChanged(Boolean? IsChecked)
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(Collection);
-            if(IsChecked == true)
+            if (IsChecked == true)
             {
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("GroupName");
                 view.GroupDescriptions.Add(groupDescription);
@@ -518,7 +521,7 @@ namespace Twoxzi.RemoteManager
         {
             get
             {
-                if(outputCommand == null)
+                if (outputCommand == null)
                 {
                     outputCommand = new RelayCommand<ListView>(OutputExecute);
                 }
@@ -552,6 +555,30 @@ namespace Twoxzi.RemoteManager
             //}
             //catch { }
             //MessageBox.Show($"已导出到目录{di.FullName},已将目录路径复制到粘贴板");
+        }
+
+        public ICommand ExtensionSettingsCommand
+        {
+            get
+            {
+                if (extensionSettingsCommand == null)
+                {
+                    extensionSettingsCommand = new RelayCommand<RemoteInfo4Binding>(extensionSettings,
+                        x => true //SelectedItemIsNotNull(x) && x.RemoteToolMetadata != null
+                        ) ;
+                }
+                return extensionSettingsCommand;
+            }
+        }
+
+        private void extensionSettings(RemoteInfo4Binding obj)
+        {
+            var tool = RemoteToolList.Where(x => x.Metadata.ToolCode == obj.ToolCode).FirstOrDefault();
+            if (tool == null)
+            {
+                return;
+            }
+            tool.Value.ExtensionPropertySetter(obj);
         }
     }
 }

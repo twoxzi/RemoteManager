@@ -104,6 +104,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <Button DockPanel.Dock="Top" Content="设置扩展属性" Command="{Binding ExtensionSettingsCommand}" CommandParameter="{Binding ElementName=listView,Path=SelectedItem}"/>
                 <TextBlock Text="备注：" DockPanel.Dock="Top"/>
                 <TextBox Text="{Binding ElementName=listView,Path=SelectedItem.Memo ,UpdateSourceTrigger=PropertyChanged}" 
                          MaxWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DockPanel},Path=MaxWidth }"

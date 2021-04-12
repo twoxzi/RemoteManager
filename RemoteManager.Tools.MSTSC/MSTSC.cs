@@ -58,6 +58,29 @@ namespace RemoteManager.Tools.MSTSC
             // process.WaitForExit();
         }
 
+        protected Boolean SplitAddressAndUserName(String source,out String address,out String name)
+        {
+            address = null;
+            name = null;
+            if (String.IsNullOrEmpty(source))
+            {
+                return false;
+            }
+
+            int index = source.IndexOf("#");
+            if (index >= 0)
+            {
+                address = source.Substring(0, index);
+                name = source.Substring(index);
+            }
+            else
+            {
+                address = source;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// 生成临时的RDP文件
         /// </summary>
@@ -73,7 +96,27 @@ namespace RemoteManager.Tools.MSTSC
             // 生成 rdp文件
             String fileName = (info?.ExtensionProperty ?? "").GetHashCode().ToString();
             String fullName = Path.GetTempPath();
-            fullName = $"{fullName}\\{fileName}.rdp";
+            fullName = Path.Combine(fullName, $"{fileName}.rdp");
+
+            String address;
+            String name;
+            SplitAddressAndUserName(info.ID, out address, out name);
+
+            if (!File.Exists(fullName))
+            {
+                using (StreamWriter sw = File.CreateText(fullName))
+                {
+                    if (!String.IsNullOrEmpty(info.ExtensionProperty))
+                    {
+                        sw.WriteLine(info.ExtensionProperty);
+                    }
+                    else
+                    {
+                       // sw.WriteLine("full address:s:" + address);
+                    }
+                }
+            }
+
             return fullName;
         }
 
@@ -92,11 +135,11 @@ namespace RemoteManager.Tools.MSTSC
             //String fileName = (info?.ExtensionProperty ?? "").GetHashCode().ToString();
             String fullName = GetTempFile(info);
             //fullName = $"{fullName}\\{fileName}.rdp";
-
             // 异步
             Task.Run(() =>
             {
-                var process = Process.Start(fullName);
+                
+                var process = Process.Start(new ProcessStartInfo(fullName) { Arguments="/edit", UseShellExecute = true });
                 process.WaitForExit();
                 using (StreamReader stream = File.OpenText(fullName))
                 {
