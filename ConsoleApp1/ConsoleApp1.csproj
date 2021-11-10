@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RemoteManager.Entity\RemoteManager.Entity.csproj" />
+    <ProjectReference Include="..\RemoteManager.Tools.TeamViewer\RemoteManager.Tools.TeamViewer.csproj" />
+    <ProjectReference Include="..\RemoteManager.Tool\RemoteManager.Tools.csproj" />
+  </ItemGroup>
+
+</Project>

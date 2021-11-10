@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>Twoxzi.RemoteManager</RootNamespace>
+    <ApplicationIcon>CN4.ico</ApplicationIcon>
+    <AssemblyName>远程管理_NETCore3</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="CN4.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RemoteManager.Entity\RemoteManager.Entity.csproj" />
+    <ProjectReference Include="..\RemoteManager.Tools.MSTSC\RemoteManager.Tools.MSTSC.csproj" />
+    <ProjectReference Include="..\RemoteManager.Tools.OraySunLogin\RemoteManager.Tools.OraySunLogin.csproj" />
+    <ProjectReference Include="..\RemoteManager.Tools.TeamViewer\RemoteManager.Tools.TeamViewer.csproj" />
+    <ProjectReference Include="..\RemoteManager.Tool\RemoteManager.Tools.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="CN4.ico" />
+  </ItemGroup>
+
+</Project>
