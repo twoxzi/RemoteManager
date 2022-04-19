@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+	  <UseWPF>true</UseWPF>
+    <RootNamespace>Twoxzi.RemoteManager.Tools.TianYao</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RemoteManager.Tool\RemoteManager.Tools.csproj" />
+    <ProjectReference Include="..\Twoxzi.RemoteManager.Common\Twoxzi.RemoteManager.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="tunnel.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

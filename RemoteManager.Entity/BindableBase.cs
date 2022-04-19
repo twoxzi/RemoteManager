@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Twoxzi.RemoteManager.Entity
 {
@@ -26,7 +27,7 @@ namespace Twoxzi.RemoteManager.Entity
         /// 属性改变
         /// </summary>
         /// <param name="propertyName"></param>
-        public void OnPropertyChanged(String propertyName = null)
+        public void OnPropertyChanged([CallerMemberName]String propertyName = null)
         {
             //if(propertyName == null)
             //{

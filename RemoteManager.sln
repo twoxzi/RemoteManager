@@ -24,6 +24,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteManager.Tools.MSTSC",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteManager.Tools.ToDesk", "RemoteManager.Tools.ToDesk\RemoteManager.Tools.ToDesk.csproj", "{ECAAF63D-341E-41A1-BBBE-D644DA75B17F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteManager.Tools.TianYao", "RemoteManager.Tools.TianYao\RemoteManager.Tools.TianYao.csproj", "{B632C3BD-F252-4682-9EDF-6A3C6A493260}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twoxzi.RemoteManager.Common", "Twoxzi.RemoteManager.Common\Twoxzi.RemoteManager.Common.csproj", "{5BE5FF91-D8E5-4286-97BB-E68D88B25C7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +66,14 @@ Global
 		{ECAAF63D-341E-41A1-BBBE-D644DA75B17F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECAAF63D-341E-41A1-BBBE-D644DA75B17F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECAAF63D-341E-41A1-BBBE-D644DA75B17F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B632C3BD-F252-4682-9EDF-6A3C6A493260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B632C3BD-F252-4682-9EDF-6A3C6A493260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B632C3BD-F252-4682-9EDF-6A3C6A493260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B632C3BD-F252-4682-9EDF-6A3C6A493260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE5FF91-D8E5-4286-97BB-E68D88B25C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE5FF91-D8E5-4286-97BB-E68D88B25C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE5FF91-D8E5-4286-97BB-E68D88B25C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE5FF91-D8E5-4286-97BB-E68D88B25C7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
