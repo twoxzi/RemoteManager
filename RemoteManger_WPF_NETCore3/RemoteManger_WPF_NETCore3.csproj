@@ -40,6 +40,7 @@
 		<ProjectReference Include="..\RemoteManager.Tools.MSTSC\RemoteManager.Tools.MSTSC.csproj" />
 		<ProjectReference Include="..\RemoteManager.Tools.OraySunLogin\RemoteManager.Tools.OraySunLogin.csproj" />
 		<ProjectReference Include="..\RemoteManager.Tools.TeamViewer\RemoteManager.Tools.TeamViewer.csproj" />
+		<ProjectReference Include="..\RemoteManager.Tools.ToDesk\RemoteManager.Tools.ToDesk.csproj" />
 		<ProjectReference Include="..\RemoteManager.Tool\RemoteManager.Tools.csproj" />
 	</ItemGroup>
 
