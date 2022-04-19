@@ -115,6 +115,7 @@
             <TextBox Name="txtSearch"   Margin="5" Width="200px" Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ClearButtonTextBoxStyle}" />
             <Button Content="新增" Margin="5" Command="{Binding AddCommand}" CommandParameter="{Binding ElementName=listView}" />
             <CheckBox Content="分组" Margin="5" Name="cbxIsGroup" IsChecked="{Binding Path=IsGroup ,Mode=TwoWay}" ></CheckBox>
+            <CheckBox Content="复制密码" Margin="5" IsChecked="{Binding Path=IsClip,Mode=TwoWay}"></CheckBox>
         </StackPanel>
         <ListView x:Name="listView"  HorizontalAlignment="Left"  VerticalAlignment="Top" DockPanel.Dock="Left" ItemsSource="{Binding Path= Collection}"
                   >

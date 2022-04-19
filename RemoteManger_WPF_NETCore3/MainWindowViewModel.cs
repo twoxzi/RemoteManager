@@ -37,6 +37,7 @@ namespace Twoxzi.RemoteManager
         private ICommand outputCommand;
         private ICommand descColumnCommand;
         private RelayCommand<RemoteInfo4Binding> extensionSettingsCommand;
+        private bool isClip;
 
         [ImportMany(typeof(IRemoteTool))]
         public List<Lazy<IRemoteTool, IRemoteToolMetadata>> RemoteToolList { get; set; }
@@ -64,6 +65,29 @@ namespace Twoxzi.RemoteManager
 
             }
         }
+        /// <summary>
+        /// 是否将密码复制到剪贴版
+        /// </summary>
+        public Boolean IsClip
+        {
+           
+            get { return isClip; }
+            set
+            {
+                isClip = value;
+                Configuration con = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                if (con.AppSettings.Settings["isClip"] == null)
+                {
+                    con.AppSettings.Settings.Add("isClip", isClip == true ? "1" : "0");
+                }
+                else
+                {
+                    con.AppSettings.Settings["isClip"].Value = isClip == true ? "1" : "0";
+                }
+                con.Save();
+            }
+        }
+    
 
         public string SearchText
         {
@@ -415,7 +439,7 @@ namespace Twoxzi.RemoteManager
                     MessageBox.Show($"没有找到编码为{info.ToolCode}的工具,请检查插件是否正确加载");
                     return;
                 }
-                if (info.Password != null && info.Password.Length > 0)
+                if (IsClip && info.Password != null && info.Password.Length > 0)
                 {
                     Clipboard.SetText(info.Password);
                 }
