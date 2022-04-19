@@ -72,9 +72,9 @@ namespace Twoxzi.RemoteManager.Entity
             {
                 DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder();
                 String path = ConfigurationManager.ConnectionStrings["rm"]?.ConnectionString ?? "Data Source={dbName}";
-#if DEBUG
-                path = "Data Source="+ System.IO.Path.Combine(System.IO.Path.GetTempPath(), "rm.db");
-#endif
+//#if DEBUG
+//                path = "Data Source="+ System.IO.Path.Combine(System.IO.Path.GetTempPath(), "rm.db");
+//#endif
                 optionsBuilder.UseSqlite(path);
                 dbo = new MyDbContext(optionsBuilder.Options);
             }
