@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Microsoft.Win32;
 
@@ -61,11 +62,20 @@ namespace Twoxzi.RemoteManager.Tools
                                 }
                                 string SoftwareName = RegistryKey2.GetValue("DisplayName", "").ToString(); // 获取软件名
                                 string InstallLocation = RegistryKey2.GetValue("InstallLocation", "").ToString(); // 获取安装路径
-                                if(!string.IsNullOrEmpty(InstallLocation)
+                                String displayIcon = RegistryKey2.GetValue("DisplayIcon", "").ToString();
+                                if (!string.IsNullOrEmpty(InstallLocation)
                                  && !string.IsNullOrEmpty(SoftwareName))
                                 {
                                     if(!Softwares.ContainsKey(SoftwareName))
                                         Softwares.Add(SoftwareName, InstallLocation);
+                                }
+                                else if (!string.IsNullOrEmpty(displayIcon)
+                                 && !string.IsNullOrEmpty(SoftwareName))
+                                {
+                                    if (!Softwares.ContainsKey(SoftwareName))
+                                    {
+                                        Softwares.Add(SoftwareName, Path.GetDirectoryName(displayIcon));
+                                    }
                                 }
                             }
                         }
